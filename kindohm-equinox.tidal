@@ -1,0 +1,243 @@
+-- cortini, legal, wave
+-- clues, toast, deeper, dream?, legends
+-- loon, nerd, patton, turret
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- metals
+do 
+  let pat = "{0@11 1@14 0@6 0@10 0 0 0 0@3 0@3 1@2 0@3 0@3}%16"
+      mod p = every 2 rev $ p
+  d1 
+    $ limit 
+    $ whenmod 20 10 (slow 1.25)
+    $ stack [
+      metal
+      , g $ mod 
+        $ ghost (# pad2) 
+        $ rytmmap [2,3] pat # note "c3"
+      , scene "0"
+      , xfademap [0,0] pat
+    ] # cps (180/120/2)
+
+
+
+
+-- hey. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- duds
+do 
+  let pat = "{0@9 0@11 0@13 1@14 0 0 0 0 1@8}%16"
+      mod p = every 2 rev $ p
+  d1
+    $ limit
+    $ stack [
+      g $ fast 2 $ (|* gain 0.95) $ duds
+      , g $ mod $ rytmmap [2,3] pat # note "c3"
+      , xfademap [0, 127] pat
+      , scene "<0>"
+      , g $ roll 0.333 $ pad2
+      , g $ struct "1(<3 5 10>,16)" $ pad1
+      , perf1 (range 0 127 $ shrand 300)
+      , g $ dg7 $ hat2
+      , g $ fast 3.1 $ perf3flip
+      , fast 2.5 $ perf4flip
+      , randcat [normDelay]
+      , randcat [mental, mental2]
+      , jux (|* speed 1.1) 
+        $ dg0 $ s "patton" # begin (range 0 0.5 $ shrand 100) # n (irand 5) # hpf 200 # speed 0.8
+          # lpf 700
+          # gain 0.9
+    ] # cps (160/120/2)
+  
+
+
+
+-- wait for it
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- sq (use notes)
+do 
+  let pat = "{0@6 0@15 1@13 1 0@11 0@3 0@3 1@3 0@3 0 0 0}%16"
+      mod p = every 2 rev $ p
+  d1
+    $ limit
+    $ stack [
+      g $ mod $ notemap ["-12", "-13"] pat # sqChan
+      , g $ xfademap [127,0] pat
+      , g $ sqccs
+      , g $ mod $ rytmmap [2,3] pat # note "c3"
+      , g $ roll 0.333 $ dg3 $ pad2
+      , g $ sb 0.09 (# pad12) $ shift $ struct "1*16?" $ pad11
+      , fast 2.2 $ perf3flip
+      , fast 2.1 $ perf4flip
+      , randcat [sane, sane, sane]
+      , slow 1.5 $ scene "<0>"
+      , perf1 (range 0 127 $ slow 33 rand)
+      , (0.25 ~>) $ pad1
+    ] # cps (160/120/2)
+
+
+-- oh no I have no flood function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- blut 
+do 
+  let pat = "{0@17 0@11 1@6 0@12 0 0 0 0 0 0 0 0 0 0 0 1@9}%16" 
+      mod p = every 2 rev $ p
+  d1 
+    $ limit
+    $ stack [
+      mod $ notemap ["-12", "-11"] pat # blutChan
+      , blutccs
+      , mod $ xfademap [0, 127] pat # blutChan
+      , ghost (# pad2) 
+        $ rytmmap [2,3] pat # note "c3"
+      , blutccs
+      , scene "<0 1 2>"
+      , hat1
+      , fast 2.1 $ perf4flip
+      , fast 3.1 $ perf3flip
+      , fast 2.25 $ randcat [sane]
+      , rip 0.5 $ dg4 $ slowcat [brakk "fur1*8", brakk "akuma1*8", brakk "jung4*8" ]
+    ] # cps (160/120/2)
+
+
+    -- thanks
+
+    hush
+
+  
+
+
+
+-- yay scrolling 
+
+
+
+
+
+
+
+
+

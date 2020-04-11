@@ -1,0 +1,50 @@
+let metal = slow "<10 8 6>"
+                    $ stack [
+                      superimpose (fast "<5 6 7>")
+                        $ pan 1 # note (scale "ritusen" (shiftBy 33 $ choose [-16,-15..2])) # legato 1
+                        # octave "<3 4 4 2>"
+                      , filter1 # ccvrand 0 120 101
+                      , penv # ccvrand 0 127 102
+                      , porta # ccvrand 0 64 103
+                      , phwidth # ccvrand 0 20 104
+                      , phoff # ccvrand 0 127 105
+                      , prism # ccvrand 0 127 106
+                      , detune # ccvrand 0 127 107
+                      , timbre # ccvrand 0 127 108
+                    ] # metalChan # legato 1
+
+do 
+  let pat = "{0@3 0@3 1@2 0@3 0@5 0@3 1@10 0@2 0@2 1@10 0 0 0}%16"
+      mod p = spreadr degradeBy [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8] $ every 2 rev $ p
+  d1 
+    $ limit 
+    $ whenmod 23 20 (iter 8)
+    $ whenmod 20 15 (slow 1.25)
+    $ whenmod 15 10 (slow 1.25)
+    $ chunk 4 (iter 16)
+    $ stack [
+      metal 
+      , mod $ xfade (mapp [0,127] pat) # metalChan
+      , ghost (# pad2) $ mod $ midichan (mapp ["[2]","[3]"] pat) # rytm # note "{-24 -26 -28}%16"
+      , fast 2 $ perf4flip
+      , fast 3.12 $ perf3flip
+      , perf7rand
+      , perf8rand
+      , fast 2.5 $ perf1rand
+      , sb 0.09 (# pad12) $ dg5 $ hat1
+      , mod $ struct "1*16?" $ pad1
+      , fast 1.333 $ shiftBy 88 $ randcat [ sane]
+      , randcat [normDelay, randDelay]
+    ] # cps (180/120/2)
+
+hush
+
+    d1 $ (|+ note "-24") $ gain "1*16?" # note (scale "minor" "{0 -1 2 5 3 2}%16") # midichan 0 # rytm
+
+    hush
+
+    d1 $ fast 5 $ s "util" # midichan 0 # ccn 8 # ccv (range 0 127 $ slow 3 rand)
+
+    d1 $ ccn 11 # ccv "127" # metalChan
+
+    hush
